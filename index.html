@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select, button {
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+  </style>
+  <title>Soil Nutrient Calculator</title>
+</head>
+<body>
+  <h1>Soil Nutrient Calculator</h1>
+
+  <label for="nitrogen">Concentration of Nitrogen (N):</label>
+  <input type="number" id="nitrogen" placeholder="Enter N concentration">
+
+  <label for="phosphorus">Concentration of Phosphorus (P):</label>
+  <input type="number" id="phosphorus" placeholder="Enter P concentration">
+
+  <label for="potassium">Concentration of Potassium (K):</label>
+  <input type="number" id="potassium" placeholder="Enter K concentration">
+
+  <label for="cropType">Select Crop Type:</label>
+  <select id="cropType">
+    <option value="kharif">Kharif</option>
+    <option value="rabi">Rabi</option>
+  </select>
+
+  <label for="crop">Select Crop:</label>
+  <select id="crop" disabled>
+    <!-- Crop options will be dynamically populated based on the selected crop type -->
+  </select>
+
+  <button onclick="calculateNutrientRequirements()">Calculate</button>
+
+  <div id="result"></div>
+
+  <script>
+    // Crop data based on Kharif and Rabi
+    const cropsData = {
+      kharif: ["Rice", "Maize", "Sorghum", "Pearl Bajra", "Finger Millet", "Arhar", "Soyabean", "Groundnut", "Cotton"],
+      rabi: ["Wheat", "Barley", "Oats", "Chickpea", "Linseed", "Mustard"]
+    };
+
+    // Function to populate crop options based on the selected crop type
+    function populateCrops() {
+      const cropType = document.getElementById("cropType");
+      const cropSelect = document.getElementById("crop");
+      const selectedCropType = cropType.value;
+
+      // Enable or disable the crop selection based on the crop type
+      cropSelect.disabled = selectedCropType === "";
+
+      // Clear existing options
+      cropSelect.innerHTML = "<option value=''>Select Crop</option>";
+
+      // Populate options based on the selected crop type
+      cropsData[selectedCropType].forEach(crop => {
+        const option = document.createElement("option");
+        option.value = crop;
+        option.textContent = crop;
+        cropSelect.appendChild(option);
+      });
+    }
+
+    // Function to calculate nutrient requirements and display the result
+    function calculateNutrientRequirements() {
+      const nitrogen = parseFloat(document.getElementById("nitrogen").value) || 0;
+      const phosphorus = parseFloat(document.getElementById("phosphorus").value) || 0;
+      const potassium = parseFloat(document.getElementById("potassium").value) || 0;
+
+      const cropType = document.getElementById("cropType").value;
+      const selectedCrop = document.getElementById("crop").value;
+
+      // Fetch nutrient requirements for the selected crop (hypothetical data)
+      const nutrientRequirements = getNutrientRequirements(selectedCrop, cropType);
+
+      // Display the result
+      const resultElement = document.getElementById("result");
+      resultElement.innerHTML = `
+        <h2>Recommended Nutrient Concentrations for ${selectedCrop} (${cropType})</h2>
+        <p>Nitrogen (N): ${nutrientRequirements.n}</p>
+        <p>Phosphorus (P): ${nutrientRequirements.p}</p>
+        <p>Potassium (K): ${nutrientRequirements.k}</p>
+        <p>N:P:K Ratio: ${nutrientRequirements.nRatio}:${nutrientRequirements.pRatio}:${nutrientRequirements.kRatio}</p>
+      `;
+    }
+
+    // Function to fetch hypothetical nutrient requirements based on the selected crop and type
+    function getNutrientRequirements(crop, cropType) {
+      // This is a placeholder function. In a real application, you would need actual data or calculations.
+      // The values below are just hypothetical.
+      const nutrientData = {
+        Rice: { n: 2, p: 1, k: 1, nRatio: 2, pRatio: 1, kRatio: 1 },
+        Maize: { n: 1, p: 0.6, k: 0.3, nRatio: 10, pRatio: 6, kRatio: 3 },
+        Sorghum: { n: 1, p: 0.6, k: 0.3, nRatio: 10, pRatio: 6, kRatio: 3 },
+        PearlBajra: { n: 1, p: 0.6, k: 0.3, nRatio: 10, pRatio: 6, kRatio: 3 },
+        FingerMillet: { n: 2, p: 1, k: 1, nRatio: 2, pRatio: 1, kRatio: 1 },
+        Arhar: { n: 1, p: 0.5, k: 1, nRatio: 2, pRatio: 1, kRatio: 2 },
+        Soyabean: { n: 4, p: 1, k: 2, nRatio: 4, pRatio: 1, kRatio: 2 },
+        Groundnut: { n: 1, p: 0.5, k: 0.1, nRatio: 2, pRatio: 1, kRatio: 2 },
+        Cotton: { n: 2, p: 1, k: 2, nRatio: 2, pRatio: 1, kRatio: 2 },
+        Wheat: { n: 2, p: 1, k: 1, nRatio: 2, pRatio: 1, kRatio: 1 },
+        Barley: { n: 2, p: 1, k: 2, nRatio: 2, pRatio: 1, kRatio: 2 },
+        Oats: { n: 1, p: 0.5, k: 1, nRatio: 2, pRatio: 1, kRatio: 2 },
+        Chickpea: { n: 1, p: 0.5, k: 1, nRatio: 2, pRatio: 1, kRatio: 2 },
+        Linseed: { n: 2, p: 1, k: 1, nRatio: 2, pRatio: 1, kRatio: 1 },
+        Mustard: { n: 1, p: 0.6, k: 0.3, nRatio: 10, pRatio: 6, kRatio: 3 },
+        // ... add data for other crops
+      };
+
+      return nutrientData[crop] || { n: 0, p: 0, k: 0, nRatio: 0, pRatio: 0, kRatio: 0 };
+    }
+
+    // Event listeners
+    document.getElementById("cropType").addEventListener("change", populateCrops);
+
+    </script>
+</body>
+</html>

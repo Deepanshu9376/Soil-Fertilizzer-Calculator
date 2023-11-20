@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-image: url("4.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff; /* Text color */
+  }
+  
+  h1 {
+    color: black; /* Green color for the heading */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: black; /* Green color for labels */
+  }
+  
+  input, select, button {
+    margin-bottom: 15px;
+    padding: 8px;
+  }
+  
+  button {
+    cursor: pointer; /* Green color for the button */
+    color: black; /* Text color for the button */
+    border: none;
+  }
+
+  #result {
+    margin-top: 20px;
+    padding: 10px;
+    color: black;
+    background-color: aquamarine;
+    border-radius: 5px;
+  }
+  
+  /* Additional styling for input fields on focus */
+  input:focus, select:focus {
+    outline: none;
+    border: 2px solid white ;/* Green border on focus */
+    box-shadow: 0 0 5px black; /* Green box shadow on focus */
+  }
+  
